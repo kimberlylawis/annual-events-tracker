@@ -3,16 +3,16 @@
   const STORAGE_KEY = 'annualEventsTracker.theme';
   const toggleBtn = document.getElementById('theme-toggle');
 
-  function updateToggleLabel(theme) {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    toggleBtn.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
-    toggleBtn.setAttribute('aria-label', `Switch to ${next} theme`);
+  function updateToggleState(theme) {
+    const isDark = theme === 'dark';
+    toggleBtn.setAttribute('aria-checked', String(isDark));
+    toggleBtn.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} theme`);
   }
 
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEY, theme);
-    updateToggleLabel(theme);
+    updateToggleState(theme);
   }
 
   toggleBtn.addEventListener('click', () => {
@@ -20,5 +20,5 @@
     applyTheme(current === 'dark' ? 'light' : 'dark');
   });
 
-  updateToggleLabel(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+  updateToggleState(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
 })();
